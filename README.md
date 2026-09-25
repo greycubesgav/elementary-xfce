@@ -40,6 +40,19 @@ sudo apt install gcc gtk-update-icon-cache libgdk-pixbuf-2.0-dev librsvg2-common
 sudo dnf install gcc gdk-pixbuf2-devel gtk-update-icon-cache make optipng pkgconf rsvg-pixbuf-loader
 ```
 
+### Installing a prebuilt tarball
+
+The "Check symlinks and build theme" GitHub workflow produces a prebuilt `elementary-xfce.tar.gz` that can be installed without any build dependencies (only `make` and `gtk-update-icon-cache`):
+
+```
+tar -xzf elementary-xfce.tar.gz
+cd elementary-xfce-icon-theme
+make install PREFIX=$HOME/.local   # or: sudo make install
+make icon-caches PREFIX=$HOME/.local   # or: sudo make icon-caches
+```
+
+The tarball can also be created locally with `./configure && make dist`.
+
 ### Building with Docker
 
 The themes can also be built in a container, without installing any build dependencies locally. This exports the built themes (including icon caches) to `./dist/usr/share/icons`:
