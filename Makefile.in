@@ -3,6 +3,8 @@ DESTDIR=
 CC?=gcc
 
 SUBDIRS := svgtopng
+THEMES := elementary-xfce elementary-xfce-dark elementary-xfce-hidpi
+DISTNAME := elementary-xfce-icon-theme
 
 all: build
 
@@ -52,7 +54,16 @@ builddir:
 	rm build/elementary-xfce-hidpi/README.md && cp README.md build/elementary-xfce-hidpi
 	find build/elementary-xfce-hidpi -mindepth 1 -maxdepth 1 -type d -exec ln -sr {} {}@2x \; -exec ln -sr {} {}@3x \;
 
-.PHONY: all $(SUBDIRS)
+dist: build
+	rm -rf build/$(DISTNAME) build/elementary-xfce.tar.gz
+	mkdir -p build/$(DISTNAME)
+	cp -R $(addprefix build/,$(THEMES)) build/$(DISTNAME)
+	cp Makefile.dist build/$(DISTNAME)/Makefile
+	cp LICENSE README.md build/$(DISTNAME)
+	tar -C build -czf build/elementary-xfce.tar.gz $(DISTNAME)
+	rm -rf build/$(DISTNAME)
+
+.PHONY: all dist $(SUBDIRS)
 
 clean:
 	rm -rf ./build

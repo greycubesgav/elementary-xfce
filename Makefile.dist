@@ -1,0 +1,28 @@
+# Makefile for installing the prebuilt icon themes from a release tarball.
+# The themes are already built, so no build dependencies are needed.
+
+PREFIX ?= /usr/local
+DESTDIR ?=
+
+THEMES := elementary-xfce elementary-xfce-dark elementary-xfce-hidpi
+ICONDIR = $(DESTDIR)$(PREFIX)/share/icons
+
+all:
+	@echo "The icon themes are already built. To install them run:"
+	@echo "    make install"
+	@echo "    make icon-caches"
+	@echo "The default prefix is $(PREFIX); override it with e.g. PREFIX=\$$HOME/.local"
+
+install:
+	install -d "$(ICONDIR)"
+	cp -rf $(THEMES) "$(ICONDIR)"
+	@echo
+	@echo The icon-theme cache has not yet been regenerated, which means your changes may not be visible yet. Please run \'make icon-caches\' next.
+
+uninstall:
+	rm -rf $(foreach theme,$(THEMES),"$(ICONDIR)/$(theme)")
+
+icon-caches:
+	for theme in $(THEMES); do gtk-update-icon-cache -f "$(ICONDIR)/$$theme" || exit 1; done
+
+.PHONY: all install uninstall icon-caches
