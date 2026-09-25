@@ -1,0 +1,8 @@
+.git
+.github
+.dockerignore
+Dockerfile
+build/
+dist/
+Makefile
+svgtopng/svgtopng
