@@ -40,6 +40,14 @@ sudo apt install gcc gtk-update-icon-cache libgdk-pixbuf-2.0-dev librsvg2-common
 sudo dnf install gcc gdk-pixbuf2-devel gtk-update-icon-cache make optipng pkgconf rsvg-pixbuf-loader
 ```
 
+### Building with Docker
+
+The themes can also be built in a container, without installing any build dependencies locally. This exports the built themes (including icon caches) to `./dist/usr/share/icons`:
+
+```
+docker build --output type=local,dest=dist .
+```
+
 ### Installation for the current user only (without admin privileges)
 
 ```
